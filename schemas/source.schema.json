@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SourceRegistryItem",
+  "type": "object",
+  "required": [
+    "source_id",
+    "type",
+    "title",
+    "language_original",
+    "license",
+    "provenance"
+  ],
+  "properties": {
+    "source_id": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "author": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "language_original": {
+      "type": "string"
+    },
+    "translations": {
+      "type": "array"
+    },
+    "license": {
+      "type": "object"
+    },
+    "provenance": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,19 @@
+[
+  {
+    "source_id": "QUR:TANZIL-UTHMANI",
+    "type": "quran",
+    "title": "Qur’an Arabic Text (Uthmani) — Tanzil Project",
+    "author": null,
+    "language_original": "ar",
+    "translations": [],
+    "license": {
+      "status": "VERIFY",
+      "license_id": "LIC:UNKNOWN",
+      "notes": "Fill from primary source"
+    },
+    "provenance": {
+      "retrieved_from": "",
+      "retrieved_at": ""
+    }
+  }
+]

@@ -1,0 +1,15 @@
+[project]
+name = "islamic-rag"
+version = "0.1.0"
+description = "Provenance-first RAG platform for Islamic Studies"
+requires-python = ">=3.10"
+dependencies = [
+  "pydantic>=2.0",
+  "pyyaml>=6.0",
+]
+
+[project.scripts]
+build-corpus = "islamic_rag.data.build_corpus:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "CorpusSegment",
+  "type": "object",
+  "required": [
+    "segment_id",
+    "source_id",
+    "type",
+    "ref",
+    "text"
+  ],
+  "properties": {
+    "segment_id": {
+      "type": "string"
+    },
+    "source_id": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "ref": {
+      "type": "object"
+    },
+    "text": {
+      "type": "object",
+      "properties": {
+        "ar": {
+          "type": "string"
+        },
+        "en": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    },
+    "meta": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

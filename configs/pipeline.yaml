@@ -1,0 +1,31 @@
+project:
+  name: islamic-rag-platform
+data:
+  raw_dir: data/raw
+  processed_dir: data/processed
+  registry_sources: data/registry/sources.json
+  registry_licenses: data/registry/licenses.json
+
+chunking:
+  quran:
+    ayah_range_windows: [1, 3, 5]
+  tafsir:
+    target_tokens: 350
+    max_tokens: 550
+  hadith:
+    target_tokens: 280
+    max_tokens: 450
+
+retrieval:
+  bm25: true
+  embeddings:
+    model: intfloat/multilingual-e5-large
+  top_k: 20
+  rerank_top_k: 8
+
+generation:
+  model: Qwen/Qwen2.5-7B-Instruct
+  require_citations: true
+  multi_view: true
+  refusal_on_low_evidence: true
+
