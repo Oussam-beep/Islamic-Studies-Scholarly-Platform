@@ -1,19 +1,44 @@
-data/raw/*
-data/processed/*
-data/eval/*
-indexes/*
-models/*
-logs/*
-
-
-!data/raw/
-!data/processed/
-!data/eval/
-!indexes/
-!models/
-!logs/
-
-
+# Python
 __pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
 .venv/
+venv/
+build/
+dist/
+
+# Secrets / local config
 .env
+.env.*
+!.env.example
+
+# Private/licensed corpus and generated indexes
+data/raw/*
+!data/raw/.gitkeep
+data/processed/
+data/derived/
+qdrant_db*/
+qdrant_storage/
+models/
+checkpoints/
+*.safetensors
+*.bin
+*.pt
+*.pth
+*.index
+*.jsonl
+
+# Notebook and editor files
+.ipynb_checkpoints/
+.vscode/
+.idea/
+.DS_Store
+
+# Local outputs
+logs/
+*.log
+results/
+outputs/
