@@ -146,9 +146,7 @@ The suite uses test doubles for selected model and vector-store paths; it does n
 - Hadith numbering follows the supplied corpus record IDs and may differ from published edition numbering.
 - Translation, word-sense disambiguation, speech-to-text, human-review workflows, and a deployed frontend are roadmap items, not features to assume are implemented here.
 
-## Data and licensing
 
-The MIT license covers the source code only; see [LICENSE](LICENSE). The source corpora and derived data are not bundled here and remain subject to their own licenses and attribution terms. Large corpus archives, model weights, local Qdrant storage, and secrets should stay out of Git.
 
 ---
 Built as an AI/NLP research prototype with a focus on provenance and evidence inspection.
