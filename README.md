@@ -1,117 +1,154 @@
-# Islamic Studies Scholarly Platform (RAG) — Project Template
+# Islamic Studies Scholarly Platform
 
-This repository is a **provenance-first** Retrieval-Augmented Generation (RAG) platform for Islamic Studies:
-Qur’ān, ḥadīth, tafsīr, fatāwā, translation, WSD, and speech-to-text.
+[![tests](https://github.com/Oussam-beep/Islamic-Studies-Scholarly-Platform/actions/workflows/tests.yml/badge.svg)](https://github.com/Oussam-beep/Islamic-Studies-Scholarly-Platform/actions/workflows/tests.yml)
+![Python](https://img.shields.io/badge/python-3.10%2B-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
 
-## Principles (non-negotiable)
-- Answers must be **grounded in retrieved passages**.
-- **Citations are mandatory** (segment IDs + source metadata).
-- The system surfaces **multiple interpretations** where sources differ.
-- **No prescriptive fatāwā**: provide references and recommend qualified jurists.
+A bilingual (Arabic/English) Retrieval-Augmented Generation (RAG) prototype for exploring Qur'an, hadith, fiqh, and fatwa passages. It retrieves source text, conditions a local language model on that evidence, and returns source records alongside the generated answer.
 
-See `PROJECT_SPEC.md` for the full project constitution.
+> **Research use only.** This prototype is not a religious authority and does not replace qualified scholars. The presence of a citation does not guarantee that a claim is supported by the cited passage.
 
-## Quick Start (skeleton)
-1. Put your original files in `data/raw/...`
-2. Fill `data/registry/sources.json` and `data/registry/licenses.json`
-3. Run the corpus builder (to implement): `python -m islamic_rag.data.build_corpus`
-4. Build indexes (to implement): `python -m islamic_rag.retrieval.build_index`
-5. Serve API/UI (to implement)
+## Application screenshots
 
-## Folder map
-islamic-rag-platform/
-├─ PROJECT_SPEC.md
-├─ README.md
-├─ pyproject.toml
-├─ configs/
-│  └─ pipeline.yaml
-├─ data/
-│  ├─ raw/                       #  ORIGINAL files 
-│  │  ├─ quran/
-│  │  │  └─ quran.json
-│  │  ├─ hadith/
-│  │  │  ├─ bukhari.json
-│  │  │  ├─ muslim.json
-│  │  │  ├─ book3.json
-│  │  │  └─ book4.json
-│  │  ├─ tafsir/
-│  │  │  ├─ ibn_kathir.json
-│  │  │  ├─ tabari.json
-│  │  │  ├─ lisan_al_bayan.json
-│  │  │  └─ mukhtasar.json
-│  │  └─ fatwa/
-│  │     └─ islamweb.json
-│  │
-│  ├─ registry/                  # REQUIRED for scholarly provenance
-│  │  ├─ sources.json             # one entry per book/source
-│  │  ├─ licenses.json            # reusable license objects
-│  │  └─ NOTICE.md                # attribution + “how to cite” notes
-│  │
-│  ├─ processed/                  # index-ready JSONL segments (generated)
-│  │  ├─ quran/
-│  │  │  ├─ ayah.jsonl
-│  │  │  ├─ words.jsonl
-│  │  │  └─ ayah_ranges.jsonl     
-│  │  ├─ hadith/
-│  │  │  ├─ bukhari.jsonl
-│  │  │  ├─ muslim.jsonl
-│  │  │  ├─ book3.jsonl
-│  │  │  └─ book4.jsonl
-│  │  ├─ tafsir/
-│  │  │  ├─ ibn_kathir.jsonl
-│  │  │  ├─ tabari.jsonl
-│  │  │  ├─ lisan_al_bayan.jsonl
-│  │  │  └─ mukhtasar.jsonl
-│  │  └─ fatwa/
-│  │     └─ islamweb.jsonl
-│  │
-│  └─ eval/                       # gold sets + adversarial tests
-│     ├─ gold_queries.jsonl
-│     ├─ expected_citations.jsonl
-│     └─ refusal_tests.jsonl
-│
-├─ schemas/                       # JSON Schemas (validation)
-│  ├─ source.schema.json
-│  ├─ segment.schema.json
-│  └─ rag_response.schema.json
-│
-├─ indexes/                       # built artifacts (FAISS/BM25)
-│  ├─ bm25/
-│  └─ vectors/
-│
-├─ models/                        # downloaded LLM/embedding weights (optional)
-│
-├─ logs/                          # audit logs (query → evidence → answer)
-│
-├─ src/
-│  └─ islamic_rag/
-│     ├─ data/
-│     │  ├─ id.py
-│     │  ├─ chunking.py
-│     │  ├─ validate.py
-│     │  └─ build_corpus.py
-│     ├─ retrieval/
-│     │  ├─ build_index.py
-│     │  └─ search.py
-│     ├─ rag/
-│     │  ├─ router.py
-│     │  ├─ generate.py
-│     │  ├─ prompts/
-│     │  └─ watchdogs/
-│     │     ├─ citations.py
-│     │     └─ quote_match.py
-│     ├─ translation/
-│     ├─ wsd/
-│     ├─ s2t/
-│     ├─ eval/
-│     └─ logging/
-│
-├─ scripts/                       # CLI wrappers
-└─ tests/                         # unit tests for IDs, chunking, validators
+The screenshots show the companion web interface used during development. The React frontend itself is maintained separately; this repository contains the Python retrieval pipeline and API.
 
-- `data/raw/` original, unchanged dumps
-- `data/processed/` index-ready JSONL segments
-- `data/registry/` provenance + licensing registry (required)
-- `schemas/` JSON Schemas for validation
-- `src/islamic_rag/` pipeline code
+| English answer with sources | Qur'an source expanded |
+|---|---|
+| ![English answer with sources](docs/screenshots/01-english-answer-with-sources.webp) | ![Qur'an source expanded](docs/screenshots/02-quran-source-expanded.webp) |
 
+| Hadith source expanded | Arabic answer with Qur'an source |
+|---|---|
+| ![Hadith source expanded](docs/screenshots/03-hadith-source-expanded.webp) | ![Arabic answer with Qur'an source](docs/screenshots/04-arabic-answer-with-quran-source.webp) |
+
+[View all screenshots in the repository](https://github.com/Oussam-beep/Islamic-Studies-Scholarly-Platform/tree/main/docs/screenshots)
+
+## How it works
+
+**Indexing:** local corpus files → normalized passages with provenance → multilingual embeddings → Qdrant vector store.
+
+**Question answering:** Arabic or English question → keyword-based source routing → filtered vector search → prompt with numbered source passages → local LLM generation → citation-tag existence check → answer plus retrieved source records.
+
+- **Passage provenance:** references and metadata are retained for source inspection.
+- **Arabic and English:** the default embedding model is `BAAI/bge-m3`; the default generation model is `Qwen/Qwen2.5-7B-Instruct`.
+- **Source-aware retrieval:** keyword routing applies source-type filters and detects direct Qur'an verse references; a failed filtered search can fall back to unfiltered retrieval.
+- **Citations:** the pipeline checks whether source numbers in the answer correspond to retrieved passages. This checks citation existence only, not whether a passage entails each claim.
+- **Interfaces:** command-line chat and a FastAPI service exposing `/ask`, `/health`, and `/warmup`.
+
+## Tech stack
+
+| Area | Technology |
+|---|---|
+| API | Python 3.10+, FastAPI, Uvicorn |
+| Vector search | Qdrant |
+| Embeddings | Sentence Transformers, `BAAI/bge-m3` |
+| Generation | Hugging Face Transformers, `Qwen/Qwen2.5-7B-Instruct` |
+| Corpus processing | JSON, `ijson` |
+| Testing | pytest, HTTPX |
+
+## Quick start
+
+### 1. Install
+
+```bash
+git clone https://github.com/Oussam-beep/Islamic-Studies-Scholarly-Platform.git
+cd Islamic-Studies-Scholarly-Platform
+python -m venv .venv
+```
+
+Activate the environment:
+
+```bash
+# macOS / Linux
+source .venv/bin/activate
+
+# Windows PowerShell
+.venv\Scripts\Activate.ps1
+```
+
+Install the project and development dependencies:
+
+```bash
+pip install -e ".[ml,dev]"
+```
+
+A compatible GPU is recommended for the 7B generation model. First-time model downloads can be large; install a PyTorch build appropriate for your machine.
+
+### 2. Add the corpus
+
+Corpus files are deliberately not included in Git. Follow [data/README.md](data/README.md) to place source files under `data/raw/`, and verify the terms of each dataset before using or redistributing it.
+
+### 3. Build an index
+
+Start Qdrant locally for a small trial:
+
+```bash
+docker run --name islamic-rag-qdrant -p 6333:6333 -v qdrant_storage:/qdrant/storage qdrant/qdrant
+```
+
+Set `QDRANT_URL=http://localhost:6333` in your environment, then run:
+
+```bash
+python -m islamic_rag.corpus --data-dir data/raw --limit 20
+python -m islamic_rag.build_index --limit 200 --recreate
+```
+
+**Warning:** `--recreate` deletes and rebuilds the selected Qdrant collection. Use it only when you intend to replace the index.
+
+### 4. Ask questions
+
+Run the CLI:
+
+```bash
+python -m islamic_rag.chat
+```
+
+Or start the API:
+
+```bash
+uvicorn islamic_rag.api:app --host 127.0.0.1 --port 8000
+```
+
+Open [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) to inspect the API. Example request:
+
+```bash
+curl -X POST http://127.0.0.1:8000/ask \
+  -H "Content-Type: application/json" \
+  -d '{"question":"What does verse 2:255 say?","top_k":5}'
+```
+
+## Repository layout
+
+```text
+src/islamic_rag/       Corpus loader, retrieval, generation, CLI and API
+tests/                 Unit tests and API contract tests
+notebooks/             Prototype notebook with saved outputs
+data/README.md         Local corpus layout and data handling
+docs/screenshots/      Application screenshots
+docs/                  Data model, ID conventions and project notes
+```
+
+## Tests
+
+Run the automated tests with:
+
+```bash
+pytest
+```
+
+The suite uses test doubles for selected model and vector-store paths; it does not measure religious correctness or answer quality on a curated evaluation benchmark. A live run requires the local corpus, a vector store, and downloaded model weights.
+
+## Known limitations
+
+- The keyword router can over-filter or miss a topic.
+- Retrieved passages can be related but incorrect or incomplete; the prototype does not yet include a reranker or hybrid search.
+- Citation checking confirms that a cited source number exists in the retrieved set, not that the cited text supports the claim.
+- There is no formal retrieval/answer-quality evaluation benchmark yet.
+- Hadith numbering follows the supplied corpus record IDs and may differ from published edition numbering.
+- Translation, word-sense disambiguation, speech-to-text, human-review workflows, and a deployed frontend are roadmap items, not features to assume are implemented here.
+
+## Data and licensing
+
+The MIT license covers the source code only; see [LICENSE](LICENSE). The source corpora and derived data are not bundled here and remain subject to their own licenses and attribution terms. Large corpus archives, model weights, local Qdrant storage, and secrets should stay out of Git.
+
+---
+Built as an AI/NLP research prototype with a focus on provenance and evidence inspection.
